@@ -1,2 +1,3 @@
-# blog-api
-Blog API built in Ruby on Rails 5
+# Blog API
+=========
+RESTful Blog API built in Rails 5.2 using Docker.
