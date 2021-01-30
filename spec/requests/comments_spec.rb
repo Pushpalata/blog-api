@@ -2,14 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'comments API' do
   # Initialize the test data
-  let!(:blog_post) { create(:post) }
+  let(:user) { create(:user) }
+  let!(:blog_post) { create(:post, user_id: user.id) }
   let!(:comments) { create_list(:comment, 20, post_id: blog_post.id) }
   let(:post_id) { blog_post.id }
   let(:id) { comments.first.id }
+  let(:headers) { valid_headers }
 
   # Test suite for GET /posts/:post_id/comments
   describe 'GET /posts/:post_id/comments' do
-    before { get "/posts/#{post_id}/comments" }
+    before { get "/posts/#{post_id}/comments", params: {}, headers: headers }
 
     context 'when post exists' do
       it 'returns status code 200' do
@@ -17,8 +19,7 @@ RSpec.describe 'comments API' do
       end
 
       it 'returns all post comments' do
-        json = JSON.parse(response.body)
-        expect(json.size).to eq(20)
+        expect(parse_response.size).to eq(20)
       end
     end
 
@@ -36,7 +37,7 @@ RSpec.describe 'comments API' do
   end
   # Test suite for GET /posts/:post_id/comments/:id
   describe 'GET /posts/:post_id/comments/:id' do
-    before { get "/posts/#{post_id}/comments/#{id}" }
+    before { get "/posts/#{post_id}/comments/#{id}", params: {}, headers: headers }
 
     context 'when post comment exists' do
       it 'returns status code 200' do
@@ -44,8 +45,7 @@ RSpec.describe 'comments API' do
       end
 
       it 'returns the comment' do
-        json = JSON.parse(response.body)
-        expect(json['id']).to eq(id)
+        expect(parse_response['id']).to eq(id)
       end
     end
 
@@ -64,10 +64,10 @@ RSpec.describe 'comments API' do
 
   # Test suite for POST /posts/:post_id/comments
   describe 'POST /posts/:post_id/comments' do
-    let(:valid_attributes) { { comment_text: 'Very Good post' } }
+    let(:valid_attributes) { { comment_text: 'Very Good post' }.to_json }
 
     context 'when request attributes are valid' do
-      before { post "/posts/#{post_id}/comments", params: valid_attributes }
+      before { post "/posts/#{post_id}/comments", params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -75,7 +75,7 @@ RSpec.describe 'comments API' do
     end
 
     context 'when an invalid request' do
-      before { post "/posts/#{post_id}/comments", params: {} }
+      before { post "/posts/#{post_id}/comments", params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -89,9 +89,9 @@ RSpec.describe 'comments API' do
 
   # Test suite for PUT /posts/:post_id/comments/:id
   describe 'PUT /posts/:post_id/comments/:id' do
-    let(:valid_attributes) { { comment_text: 'Mozart' } }
+    let(:valid_attributes) { { comment_text: 'Mozart' }.to_json }
 
-    before { put "/posts/#{post_id}/comments/#{id}", params: valid_attributes }
+    before { put "/posts/#{post_id}/comments/#{id}", params: valid_attributes, headers: headers }
 
     context 'when comment exists' do
       it 'returns status code 204' do
@@ -119,7 +119,7 @@ RSpec.describe 'comments API' do
 
   # Test suite for DELETE /posts/:id
   describe 'DELETE /posts/:id' do
-    before { delete "/posts/#{post_id}/comments/#{id}" }
+    before { delete "/posts/#{post_id}/comments/#{id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

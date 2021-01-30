@@ -3,19 +3,19 @@ class PostsController < ApplicationController
 
   # GET /Posts
   def index
-    @posts = Post.all
-    render json: @posts, status: :ok
+    @posts = current_user.posts
+    json_response(@posts)
   end
 
   # POST /Posts
   def create
-    @post = Post.create!(post_params)
-    render json: @post, status: :created
+    @post = current_user.posts.create!(post_params)
+    json_response(@post, :created)
   end
 
   # GET /Posts/:id
   def show
-    render json: @post, status: :ok
+    json_response(@post, :ok)
   end
 
   # PUT /Posts/:id
