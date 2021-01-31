@@ -5,6 +5,7 @@ class User < ApplicationRecord
   # Model associations
   has_many :posts
   has_many :comments
+  has_many :likes
   # Validations
   validates_presence_of :name, :email, :password_digest
 end
