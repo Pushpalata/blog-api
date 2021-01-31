@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.permit(:comment_text)
+    params.permit(:comment_text).merge(user_id: current_user.id)
   end
 
   def set_post
