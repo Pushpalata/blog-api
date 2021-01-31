@@ -4,18 +4,18 @@ class CommentsController < ApplicationController
 
   # GET /posts/:post_id/comments
   def index
-    render json: @post.comments, status: :ok
+    json_response(@post.comments.paginate(page: params[:page], per_page: 20), :ok)
   end
 
   # GET /posts/:post_id/comments/:id
   def show
-    render json: @comment, status: :ok
+    json_response(@comment, :ok)
   end
 
   # POST /posts/:post_id/comments
   def create
-    @post.comments.create!(comment_params)
-    render json: @post, status: :created
+    @comment = @post.comments.create!(comment_params)
+    json_response(@comment, :created)
   end
 
   # PUT /posts/:post_id/comments/:id
