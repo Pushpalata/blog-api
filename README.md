@@ -5,6 +5,7 @@ RESTful Blog API built in Rails 5.2 using Docker.
 ### Prerequisities
 
 Two ways to run this application.
+
 With Docker:
 
 * [Windows](https://docs.docker.com/windows/started)
@@ -13,6 +14,7 @@ With Docker:
 
 
 Without Docker:
+
 * Rails 5.2
 * Ruby 2.5
 
@@ -26,6 +28,7 @@ docker-compose build web
 docker-compose up web
 
 Rails:
+
 bundle install
 rails s
 
