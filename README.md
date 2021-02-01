@@ -64,3 +64,5 @@ Rails:
 | `/user_posts` | `GET` |  Returns a list of user's posts |
 | `/user_comments` | `GET` |  Returns a list of user's comments |
 
+### Demo
+https://rails-5-blog-api.herokuapp.com/posts
