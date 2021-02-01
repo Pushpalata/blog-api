@@ -40,13 +40,7 @@ Rails:
     `bundle exec rspec`
 
 ## API Routes
-| Name   |      API      | 
-|----------|:-------------:|
-| Get posts |  http :3000/posts |
-| Create Post |  http POST :3000/posts title="First post" body="this is test content"   |
-
-
-| resource      | Method | description                       |
+| Resource      | Method | description                       |
 |:--------------|:-------|:----------------------------------|
 | `/signup`     |`POST` | Create User
 | `/login`    |`POST` | User Login
