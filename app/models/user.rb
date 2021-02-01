@@ -8,4 +8,5 @@ class User < ApplicationRecord
   has_many :likes
   # Validations
   validates_presence_of :name, :email, :password_digest
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
 end

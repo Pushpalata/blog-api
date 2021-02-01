@@ -6,6 +6,9 @@ RSpec.describe 'Users API', type: :request do
   let(:valid_attributes) do
     attributes_for(:user, password_confirmation: user.password)
   end
+  let(:invalid_email_request) do
+    attributes_for(:user, email: 'test')
+  end
 
   # User signup test suite
   describe 'POST /signup' do
@@ -35,6 +38,19 @@ RSpec.describe 'Users API', type: :request do
       it 'returns failure message' do
         expect(parse_response['message'])
           .to match(/Validation failed: Password can't be blank, Name can't be blank, Email can't be blank, Password digest can't be blank/)
+      end
+    end
+
+    context 'when invalid email' do
+      before { post '/signup', params: invalid_email_request.to_json, headers: headers }
+
+      it 'does not create a new user' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns failure message' do
+        expect(parse_response['message'])
+          .to match(/Validation failed: Email is invalid/)
       end
     end
   end
