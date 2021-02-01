@@ -24,20 +24,20 @@ Without Docker:
 ### Run application
 Docker: 
 
-docker-compose build web
-docker-compose up web
+`docker-compose build web`
+`docker-compose up web`
 
 Rails:
 
-bundle install
-rails s
+`bundle install`
+`rails s`
 
 ### Run Test
 
 Docker:
-    docker-compose run -e "RAILS_ENV=test" web bundle exec rspec
+    `docker-compose run -e "RAILS_ENV=test" web bundle exec rspec`
 Rails:
-    bundle exec rspec
+    `bundle exec rspec`
 
 ## API Routes
 | Name   |      API      | 
@@ -46,4 +46,23 @@ Rails:
 | Create Post |  http POST :3000/posts title="First post" body="this is test content"   |
 
 
+| resource      | Method | description                       |
+|:--------------|:-------|:----------------------------------|
+| `/signup`     |`POST` | Create User
+| `/login`    |`POST` | User Login
+| `/posts` |`GET` | Returns a list of posts |
+| `/posts/:id`      |`GET` | Returns a post |
+| `/posts`  |`POST` | Create post |
+| `/posts/:id` | `PUT` | Update a post |
+| `/posts/:id` | `DELETE` | Delete a post |
+| `/posts/:id/comments` | `GET` |  Returns comments of a post |
+| `/posts/:id/comments/:id` | `GET` |  Returns a post's comment |
+| `/posts/:id/comments` | `POST` | Creates a post's comment |
+| `/posts/:id/comments/:id` | `PUT` | Updates a post's comment |
+| `/posts/:id/comments/:id` | `DELETE` | Deletes a post's comment |
+| `/posts/:id/likes` | `GET` |  Returns likes of a post |
+| `/posts/:id/likes` | `POST` |  Like a post |
+| `/posts/:id/unlike` | `DELETE` |  Unlike a post |
+| `/user_posts` | `GET` |  Returns a list of user's posts |
+| `/user_comments` | `GET` |  Returns a list of user's comments |
 

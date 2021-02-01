@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /Posts
   def index
-    @posts = current_user.posts.paginate(page: params[:page], per_page: 20)
+    @posts = Post.all.paginate(page: params[:page], per_page: 20)
     json_response(@posts)
   end
 

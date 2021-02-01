@@ -10,6 +10,14 @@ class UsersController < ApplicationController
     json_response(response, :created)
   end
 
+  def my_posts
+    json_response(current_user.posts.paginate(page: params[:page], per_page: 20), :ok)
+  end
+
+  def my_comments
+    json_response(current_user.comments.paginate(page: params[:page], per_page: 20), :ok)
+  end
+
   private
 
   def user_params
