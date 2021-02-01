@@ -25,18 +25,22 @@ Without Docker:
 Docker: 
 
 `docker-compose build web`
+
 `docker-compose up web`
 
 Rails:
 
 `bundle install`
+
 `rails s`
 
 ### Run Test
 
 Docker:
+
     `docker-compose run -e "RAILS_ENV=test" web bundle exec rspec`
 Rails:
+
     `bundle exec rspec`
 
 ## API Routes
