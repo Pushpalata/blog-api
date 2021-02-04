@@ -2,12 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'Users API', type: :request do
   let(:user) { build(:user) }
+  let(:existing_user) { create(:user) }
   let(:headers) { valid_headers.except('Authorization') }
   let(:valid_attributes) do
     attributes_for(:user, password_confirmation: user.password)
   end
   let(:invalid_email_request) do
     attributes_for(:user, email: 'test')
+  end
+
+  let(:same_email_request) do
+    attributes_for(:user, email: existing_user.email)
   end
 
   # User signup test suite
@@ -51,6 +56,19 @@ RSpec.describe 'Users API', type: :request do
       it 'returns failure message' do
         expect(parse_response['message'])
           .to match(/Validation failed: Email is invalid/)
+      end
+    end
+
+    context 'when already existing email passed' do
+      before { post '/signup', params: same_email_request.to_json, headers: headers }
+
+      it 'does not create new user' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns failure message' do
+        expect(parse_response['message'])
+          .to match(/Validation failed: Email has already been taken/)
       end
     end
   end
