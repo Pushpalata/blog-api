@@ -4,7 +4,7 @@ RSpec.describe 'comments API' do
   # Initialize the test data
   let(:user) { create(:user) }
   let!(:blog_post) { create(:post, user_id: user.id) }
-  let!(:comments) { create_list(:comment, 20, post_id: blog_post.id) }
+  let!(:comments) { create_list(:comment, 20, post_id: blog_post.id, user_id: user.id) }
   let(:post_id) { blog_post.id }
   let(:id) { comments.first.id }
   let(:headers) { valid_headers }

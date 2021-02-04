@@ -38,6 +38,32 @@ RSpec.describe 'posts API', type: :request do
       end
     end
 
+    context 'when there are no like or comment' do
+      it 'returns the 0 likes_count' do
+        expect(parse_response['likes_count']).to eq(0)
+      end
+
+      it 'returns the 0 comments_count' do
+        expect(parse_response['comments_count']).to eq(0)
+      end
+    end
+
+    context 'when like and comment is added' do
+      before do 
+        create(:like, user_id: user.id, post_id: post_id)
+        create(:comment, user_id: user.id, post_id: post_id)
+        get "/posts/#{post_id}", params: {}, headers: headers
+      end
+
+      it 'returns non-zero likes_count' do
+        expect(parse_response['likes_count']).to eq(1)
+      end
+
+      it 'returns non-zero comments_count' do
+        expect(parse_response['comments_count']).to eq(1)
+      end
+    end
+
     context 'when the record does not exist' do
       let(:post_id) { 100 }
 
@@ -108,4 +134,38 @@ RSpec.describe 'posts API', type: :request do
       expect(response).to have_http_status(204)
     end
   end
+
+  # Test suite for Draft post
+  describe 'Drafting posts' do
+    let(:valid_attributes) { { draft: true }.to_json }
+
+    context 'when marking post as draft' do
+      before { put "/posts/#{post_id}", params: valid_attributes, headers: headers }
+
+      it 'updates the record' do
+        expect(response.body).to be_empty
+      end
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'When post is drafted' do
+      before do 
+        put "/posts/#{post_id}", params: valid_attributes, headers: headers
+        get '/posts', params: {}, headers: headers
+      end
+
+      it 'returns live posts' do
+        expect(parse_response).not_to be_empty
+        expect(parse_response.size).to eq(9)
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
+
 end

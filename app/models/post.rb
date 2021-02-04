@@ -4,5 +4,9 @@ class Post < ApplicationRecord
   belongs_to :user
 	
 	# validations
-  validates_presence_of :title, :body
+  validates_presence_of :title, :body, :user_id
+
+  #scope
+  scope :live, -> { where(draft: false) }
+
 end

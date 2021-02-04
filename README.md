@@ -38,7 +38,7 @@ Rails:
 
 Docker:
 
-    `docker-compose run -e "RAILS_ENV=test" web bundle exec rspec`
+    `docker-compose exec -e "RAILS_ENV=test" web bundle exec rspec`
 Rails:
 
     `bundle exec rspec`
@@ -64,3 +64,6 @@ Rails:
 | `/user_posts` | `GET` |  Returns a list of user's posts |
 | `/user_comments` | `GET` |  Returns a list of user's comments |
 
+
+## Source
+Adapted [Austin Kabiru's](https://www.digitalocean.com/community/tutorials/build-a-restful-json-api-with-rails-5-part-one) approach

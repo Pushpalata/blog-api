@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /Posts
   def index
-    @posts = Post.all.paginate(page: params[:page], per_page: 20)
+    @posts = Post.live.paginate(page: params[:page], per_page: 20)
     json_response(@posts)
   end
 
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
 
   def post_params
     # whitelist params
-    params.permit(:title, :body)
+    params.permit(:title, :body, :draft)
   end
 
   def set_post
