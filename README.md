@@ -64,6 +64,10 @@ Rails:
 | `/user_posts` | `GET` |  Returns a list of user's posts |
 | `/user_comments` | `GET` |  Returns a list of user's comments |
 
+### Demo
+https://rails-5-blog-api.herokuapp.com/posts
+
 
 ## Source
 Adapted [Austin Kabiru's](https://www.digitalocean.com/community/tutorials/build-a-restful-json-api-with-rails-5-part-one) approach
+
